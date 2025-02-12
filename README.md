@@ -8,37 +8,19 @@ Character: Dialogue
 
 ## Approach and implementation
 The project consists of three main MapReduce jobs:
+1. Most Frequently Spoken Words by Characters
+Mapper (CharacterWordMapper.java): Splits each line into Character and Dialogue, Tokenizes the dialogue into words, Emits (Character:Word, 1) key-value pairs.
+Reducer (CharacterWordReducer.java):Aggregates word counts per character, Outputs the frequency of each word spoken by characters.
 
-###1. Most Frequently Spoken Words by Characters
+2. Total Dialogue Length per Character
+Mapper (DialogueLengthMapper.java):Extracts the character name and calculates the length of their dialogue, Emits (Character, dialogue length) key-value pairs.
+Reducer (DialogueLengthReducer.java):Sums up the total dialogue length per character.
 
-Mapper (CharacterWordMapper.java):
+3. Unique Words Used by Each Character
+Mapper (UniqueWordsMapper.java):Tokenizes the dialogue and emits (Character, Word) key-value pairs.
+Reducer (UniqueWordsReducer.java):Collects unique words spoken by each character.
 
-Splits each line into Character and Dialogue.
-
-Tokenizes the dialogue into words.
-
-Emits (Character:Word, 1) key-value pairs.
-
-Reducer (CharacterWordReducer.java):
-
-Aggregates word counts per character.
-
-Outputs the frequency of each word spoken by characters.
-
-###2. Total Dialogue Length per Character
-Mapper (DialogueLengthMapper.java):
-Extracts the character name and calculates the length of their dialogue.
-Emits (Character, dialogue length) key-value pairs.
-Reducer (DialogueLengthReducer.java):
-Sums up the total dialogue length per character.
-
-###3. Unique Words Used by Each Character
-Mapper (UniqueWordsMapper.java):
-Tokenizes the dialogue and emits (Character, Word) key-value pairs.
-Reducer (UniqueWordsReducer.java):
-Collects unique words spoken by each character.
-
-###Additionally, Hadoop Counters track:
+Additionally, Hadoop Counters track:
 Total number of lines processed
 Total words processed
 Total characters processed
@@ -122,7 +104,7 @@ To view the output of your MapReduce job, use:
 ```bash
 hadoop fs -ls /output1
 ```
-####9.2 View the Output Files for Each Task
+9.2 View the Output Files for Each Task
 Task 1: Most Frequent Words by Character
 ```bash
 hadoop fs -cat /output/task1/part-r-00000
@@ -153,7 +135,7 @@ To copy the output from HDFS to your local machine:
 3. Commit and push to your repo so that we can able to see your output
 
 ### 11. Submit Your Code and Output
-####11.1 Push Your Code and Output to GitHub
+11.1 Push Your Code and Output to GitHub
 Commit your changes, including the output from the MapReduce job, and push them to your GitHub repository:
 ```bash
 git add .
@@ -173,7 +155,7 @@ JACK: We don’t have time, Rose!
    ```
 
 ## Expected output: 
-####1. Most Frequently Spoken Words by Characters
+1. Most Frequently Spoken Words by Characters
  ```bash
 the 3
 we 3
@@ -183,13 +165,13 @@ now 1
 without 1
    ```
 
-####2. Total Dialogue Length per Character
+2. Total Dialogue Length per Character
  ```bash
 JACK 54
 ROSE 25
    ```
 
-####3. Unique Words Used by Each Character
+3. Unique Words Used by Each Character
  ```bash
 JACK [the, ship, is, sinking, we, have, to, go, now, don’t, time, rose]
 ROSE [i, won’t, leave, without, you]
