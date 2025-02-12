@@ -91,10 +91,10 @@ hadoop fs -put movie_dialogues.txt /input/movie_scripts/
 
 ### 8. **Execute the MapReduce Job**
 
-Run your MapReduce job using the following command: Here I got an error saying output already exists so I changed it to output1 instead as destination folder
+Run your MapReduce job using the following command: Here I got an error saying output already exists so I changed it to output2 instead as destination folder
 
 ```bash
-hadoop jar hands-on2-movie-script-analysis-1.0-SNAPSHOT.jar com.movie.script.analysis.MovieScriptAnalysis /input/movie_scripts/movie_dialogues.txt /output1
+hadoop jar hands-on2-movie-script-analysis-1.0-SNAPSHOT.jar com.movie.script.analysis.MovieScriptAnalysis /input/movie_scripts/movie_dialogues.txt /output2
 ```
 
 ### 9. **View the Output**
@@ -102,20 +102,20 @@ hadoop jar hands-on2-movie-script-analysis-1.0-SNAPSHOT.jar com.movie.script.ana
 To view the output of your MapReduce job, use:
 
 ```bash
-hadoop fs -ls /output1
+hadoop fs -ls /output2
 ```
 9.2 View the Output Files for Each Task
 Task 1: Most Frequent Words by Character
 ```bash
-hadoop fs -cat /output/task1/part-r-00000
+hadoop fs -cat /output2/task1/part-r-00000
 ```
 Task 2: Dialogue Length Analysis
 ```bash
-hadoop fs -cat /output/task2/part-r-00000
+hadoop fs -cat /output2/task2/part-r-00000
 ```
 Task 3: Unique Words by Character
 ```bash
-hadoop fs -cat /output/task3/part-r-00000
+hadoop fs -cat /output2/task3/part-r-00000
 ```
 These commands will display the results for each analysis task.
 
@@ -123,14 +123,14 @@ These commands will display the results for each analysis task.
 To copy the output from HDFS to your local machine:
 1. Use the following command to copy from HDFS:
     ```bash
-    hadoop fs -get /output1 /opt/hadoop-3.2.1/share/hadoop/mapreduce/
+    hadoop fs -get /output2 /opt/hadoop-3.2.1/share/hadoop/mapreduce/
     ```
 2. use Docker to copy from the container to your local machine:
    ```bash
    exit 
    ```
     ```bash
-    docker cp resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/output1/ ./output1/
+    docker cp resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/output2/ ./output2/
     ```
 3. Commit and push to your repo so that we can able to see your output
 
