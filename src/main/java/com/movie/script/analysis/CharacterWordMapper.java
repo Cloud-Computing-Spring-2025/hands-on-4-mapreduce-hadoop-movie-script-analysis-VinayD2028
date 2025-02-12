@@ -11,26 +11,22 @@ public class CharacterWordMapper extends Mapper<Object, Text, Text, IntWritable>
 
     private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
-    private Text characterWord = new Text();
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
         String line = value.toString().trim();
-        if (!line.contains(":")) return;
+        if (line.isEmpty() || !line.contains(":")) return;
 
+        // Extract dialogue portion
         String[] parts = line.split(":", 2);
         if (parts.length < 2) return;
 
-        String character = parts[0].trim();
-        String dialogue = parts[1].trim();
-
+        String dialogue = parts[1].trim().toLowerCase().replaceAll("[^a-zA-Z ]", "");
         StringTokenizer tokenizer = new StringTokenizer(dialogue);
+
         while (tokenizer.hasMoreTokens()) {
-            word.set(tokenizer.nextToken().replaceAll("[^a-zA-Z]", "").toLowerCase());
-            if (!word.toString().isEmpty()) {
-                characterWord.set(character + ":" + word);
-                context.write(characterWord, one);
-            }
+            word.set(tokenizer.nextToken());
+            context.write(word, one);
         }
     }
 }
